@@ -78,8 +78,8 @@ class MainScreenViewModel @Inject constructor(private val listRepository: ListRe
     private fun refreshList() {
         viewModelState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            /*val result = listRepository.provideList()*/
-            val result = listRepository.provideErrorList()
+            val result = listRepository.provideList()
+            /*val result = listRepository.provideErrorList()*/
             viewModelState.update {
                 when (result) {
                     is Result.Success -> it.copy(listFeed = result.data, isLoading = false)
