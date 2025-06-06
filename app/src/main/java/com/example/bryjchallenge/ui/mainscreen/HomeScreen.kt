@@ -1,5 +1,6 @@
 package com.example.bryjchallenge.ui.mainscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
-fun HomeScreen(uiState: StateFlow<MainScreenUIState>) {
+fun HomeScreen(uiState: StateFlow<MainScreenUIState>, itemClickFunction: (String) -> Unit) {
 
     val uiStateCollect = uiState.collectAsState().value
     val isLoading = uiStateCollect.isLoading
@@ -35,7 +36,7 @@ fun HomeScreen(uiState: StateFlow<MainScreenUIState>) {
                 when (uiStateCollect) {
                     is MainScreenUIState.HasFeed -> {
                         listFeed = uiStateCollect.listFeed
-                        VerticalList(listFeed)
+                        VerticalList(listFeed, itemClickFunction)
                     }
 
                     is MainScreenUIState.NoFeed -> {
@@ -58,15 +59,16 @@ fun LoadingContent() {
 }
 
 @Composable
-fun VerticalList(itemList: List<String>) {
+fun VerticalList(itemList: List<String>, itemClickFunction: (String) -> Unit) {
     LazyColumn {
         items(itemList) { item ->
             Text(
                 text = item,
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxWidth(),
-                style = MaterialTheme.typography.bodyMedium
+                    .fillMaxWidth()
+                    .clickable { itemClickFunction(item) },
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }

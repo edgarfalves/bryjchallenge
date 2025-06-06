@@ -20,7 +20,9 @@ fun ApplicationNavGraph(
     NavHost(navController = navController, startDestination = startDestination, modifier = modifier) {
         composable (route = ApplicationDestinations.HOME_ROUTE) { _ ->
             val homeViewModel: MainScreenViewModel = hiltViewModel()
-            HomeScreen(uiState = homeViewModel::uiState.get())
+            HomeScreen(uiState = homeViewModel::uiState.get(),
+                itemClickFunction = homeViewModel::itemClick
+            )
         }
     }
 }

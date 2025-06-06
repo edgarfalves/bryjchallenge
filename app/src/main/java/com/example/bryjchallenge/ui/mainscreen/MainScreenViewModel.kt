@@ -1,11 +1,13 @@
 package com.example.bryjchallenge.ui.mainscreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bryjchallenge.data.ErrorMessage
 import com.example.bryjchallenge.data.ListRepository
 import com.example.bryjchallenge.data.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -93,6 +95,13 @@ class MainScreenViewModel @Inject constructor(private val listRepository: ListRe
                     }
                 }
             }
+        }
+    }
+
+    fun itemClick(element: String) {
+        viewModelScope.launch {
+            delay(3000)
+            Log.d("MainScreenViewModel", element)
         }
     }
 }
